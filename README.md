@@ -5,7 +5,7 @@ $ docker build -t nrsak-py:0.1
 ```
 ## then, example command and output
 ```
-$ docker run -e NR_KEY=XXXXXXXXXXXXXX nrsak-py:0.1 nrsak.py GetSummary | jq '.applications[].name'
+$ docker run -e NR_KEY=XXXXXXXXXXXXXX nrsak-py:0.1 nrsak.py nrSummary | jq '.applications[].name'
 "Python Agent Test"
 "Python Application"
 ```
