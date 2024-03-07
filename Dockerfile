@@ -1,6 +1,6 @@
 FROM python:latest
 LABEL author=23skdu@users.noreply.github.com
-RUN apt update && apt -y upgrade \
-    && pip3 install python-lsp-server streamlit numpy pandas matplotlib tensorflow scikit-learn plotly
-COPY tool /bin
+RUN set +x && apt update && apt -y upgrade \
+    && pip3 install python-lsp-server newrelic prometheus-client opentelemetry-distro numpy pandas matplotlib tensorflow scikit-learn plotly re requests 
+COPY nrsak.py /bin
 CMD ["python","-c", "print('works')"] 
