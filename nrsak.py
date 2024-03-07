@@ -22,4 +22,4 @@ def GetSummary():
     print(result.request.headers)
     sys.exit(1)
 
-GetSummary()
+eval(action+'()')
