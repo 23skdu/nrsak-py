@@ -4,4 +4,4 @@ RUN set +x && apt update && apt -y upgrade \
     && pip3 install argparse requests newrelic prometheus-client opentelemetry-distro \
     && pip3 cache purge
 COPY nrsak.py /bin
-CMD ["pylsp","--help"] 
+CMD ["python3","-c","print('works')"] 
