@@ -1,12 +1,12 @@
 #python tool template
 build into a docker and run from there
 ```
-$ docker build -t pytool:0.1 
+$ docker build -t nrsak-py:0.1 
 ```
 ## then
 ```
-$ docker run pytool:0.1 tool
-Usage: tool [-h] a
-tool: error: the following arguments are required: a
+$ docker run nrsak-py:0.1 nrsak.py
+Usage: nrsak.py [-h] action
+tool: error: the following arguments are required: action
 ```
 
