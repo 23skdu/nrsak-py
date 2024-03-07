@@ -3,10 +3,28 @@ build into a docker and run from there
 ```
 $ docker build -t nrsak-py:0.1 
 ```
-## then
+## then, example command and output
 ```
-$ docker run nrsak-py:0.1 nrsak.py
-Usage: nrsak.py [-h] action
-tool: error: the following arguments are required: action
+$ docker run nrsak-py:0.1 nrsak.py GetSummary | jq
+{
+  "applications": [
+    {
+      "id": XXXXXXXXXXXX,
+      "name": "Python Agent Test",
+      "language": "python",
+      "health_status": "gray",
+      "reporting": false,
+      "settings": {
+        "app_apdex_threshold": 0.5,
+        "end_user_apdex_threshold": 7,
+        "enable_real_user_monitoring": true,
+        "use_server_side_config": false
+      },
+      "links": {
+        "application_instances": [],
+        "servers": [],
+        "application_hosts": []
+      }
+    },
 ```
 
