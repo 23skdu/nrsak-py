@@ -13,13 +13,13 @@ parser.add_argument("action")
 args = parser.parse_args()
 action=args.action
 
+eval(action+'()')
+
 def GetSummary():
   result = requests.get("https://api.newrelic.com/v2/applications.json", headers={"Api-Key":nrkey})
   if result.status_code == 200:
     print(result.text)
   else:
-    print(f"Error: {result.status_code}")
+    print("Error: {result.status_code}")
     print(result.request.headers)
     sys.exit(1)
-
-eval(action+'()')
