@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-import inspect, sys, os, argparse, re, requests
+import inspect, sys, os, argparse, requests
 try:
   nrkey = os.environ["NR_KEY"]
 except:
   print("you must have NR_KEY environment variable set")
   sys.exit(1)
 
-nrapi = 'https://api.newrelic.com/v2'
+nrapi = 'https://api.newrelic.com/v2/'
+nrnerd = 'https://api.newrelic.com/graphql'
+
 parser = argparse.ArgumentParser()
 parser.add_argument("action")
 args = parser.parse_args()
@@ -14,11 +16,11 @@ action=args.action
 
 def function_list():
   for name, data in inspect.getmembers(sys.modules['__main__'], inspect.isfunction):
-    if name.startswith('Get'):
+    if name.startswith('nr'):
       print(name)
 
-def GetSummary():
-  result = requests.get("https://api.newrelic.com/v2/applications.json", headers={"Api-Key":nrkey})
+def nrSummary():
+  result = requests.get(nrapi+"applications.json", headers={"Api-Key":nrkey})
   if result.status_code == 200:
     print(result.text)
   else:
