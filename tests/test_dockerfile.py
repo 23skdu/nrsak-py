@@ -26,7 +26,8 @@ class TestDockerfile:
     def test_build_and_function_list(self, image):
         out = subprocess.run(
             ["docker", "run", "--rm", image],
-            check=False, capture_output=True,
+            check=False,
+            capture_output=True,
             text=True,
         )
         assert out.returncode == 0, out.stderr
@@ -35,17 +36,19 @@ class TestDockerfile:
     def test_run_nr_summary_without_key_fails(self, image):
         out = subprocess.run(
             ["docker", "run", "--rm", image, "nrSummary"],
-            check=False, capture_output=True,
+            check=False,
+            capture_output=True,
             text=True,
         )
         assert out.returncode != 0
-        combined = (out.stdout + out.stderr)
+        combined = out.stdout + out.stderr
         assert "NR_KEY" in combined
 
     def test_runs_as_non_root(self, image):
         out = subprocess.run(
             ["docker", "run", "--rm", "--entrypoint", "id", image],
-            check=False, capture_output=True,
+            check=False,
+            capture_output=True,
             text=True,
         )
         assert out.returncode == 0

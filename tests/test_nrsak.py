@@ -1,4 +1,3 @@
-
 import pytest
 
 import nrsak
@@ -24,7 +23,9 @@ def test_function_list_prints(capsys):
 
 
 def test_nr_summary_success(requests_mock):
-    requests_mock.get("https://api.newrelic.com/v2/applications.json", json={"applications": [{"name": "A"}]})
+    requests_mock.get(
+        "https://api.newrelic.com/v2/applications.json", json={"applications": [{"name": "A"}]}
+    )
     result = nrsak.nrSummary()
     assert result == {"applications": [{"name": "A"}]}
 
@@ -36,13 +37,17 @@ def test_nr_summary_missing_key(monkeypatch):
 
 
 def test_nr_summary_error_status(requests_mock):
-    requests_mock.get("https://api.newrelic.com/v2/applications.json", status_code=401, text="unauthorized")
+    requests_mock.get(
+        "https://api.newrelic.com/v2/applications.json", status_code=401, text="unauthorized"
+    )
     with pytest.raises(SystemExit):
         nrsak.nrSummary()
 
 
 def test_nr_application_by_id(requests_mock):
-    requests_mock.get("https://api.newrelic.com/v2/applications/42.json", json={"application": {"id": 42}})
+    requests_mock.get(
+        "https://api.newrelic.com/v2/applications/42.json", json={"application": {"id": 42}}
+    )
     result = nrsak.nrApplication(42)
     assert result == {"application": {"id": 42}}
 
@@ -77,7 +82,10 @@ def test_nr_deployments_requires_app_id(monkeypatch):
 
 def test_nr_create_deployment(requests_mock, monkeypatch):
     monkeypatch.setenv("APP_ID", "5")
-    requests_mock.post("https://api.newrelic.com/v2/applications/5/deployments.json", json={"deployment": {"id": 1}})
+    requests_mock.post(
+        "https://api.newrelic.com/v2/applications/5/deployments.json",
+        json={"deployment": {"id": 1}},
+    )
     result = nrsak.nrCreateDeployment(revision="v1.2.3", changelog="changes")
     assert result == {"deployment": {"id": 1}}
     assert requests_mock.last_request.json()["deployment"]["revision"] == "v1.2.3"
@@ -85,7 +93,10 @@ def test_nr_create_deployment(requests_mock, monkeypatch):
 
 def test_nr_nrql(requests_mock, monkeypatch):
     monkeypatch.setenv("NR_ACCOUNT_ID", "12345")
-    requests_mock.post("https://api.newrelic.com/graphql", json={"data": {"actor": {"account": {"nrql": {"results": [{"count": 1}]}}}}})
+    requests_mock.post(
+        "https://api.newrelic.com/graphql",
+        json={"data": {"actor": {"account": {"nrql": {"results": [{"count": 1}]}}}}},
+    )
     result = nrsak.nrNrql("SELECT count(*) FROM Transaction SINCE 1 hour ago", account_id=12345)
     assert result["actor"]["account"]["nrql"]["results"] == [{"count": 1}]
 
@@ -96,19 +107,27 @@ def test_nr_nrql_missing_account():
 
 
 def test_nr_account(requests_mock):
-    requests_mock.post("https://api.newrelic.com/graphql", json={"data": {"actor": {"accounts": [{"id": 1, "name": "Acct"}]}}})
+    requests_mock.post(
+        "https://api.newrelic.com/graphql",
+        json={"data": {"actor": {"accounts": [{"id": 1, "name": "Acct"}]}}},
+    )
     result = nrsak.nrAccount()
     assert result["actor"]["accounts"][0]["name"] == "Acct"
 
 
 def test_nr_entities(requests_mock):
-    requests_mock.post("https://api.newrelic.com/graphql", json={"data": {"actor": {"entitySearch": {"results": {"entities": [{"guid": "g"}]}}}}})
+    requests_mock.post(
+        "https://api.newrelic.com/graphql",
+        json={"data": {"actor": {"entitySearch": {"results": {"entities": [{"guid": "g"}]}}}}},
+    )
     result = nrsak.nrEntities("name LIKE '%foo%'")
     assert result["actor"]["entitySearch"]["results"]["entities"][0]["guid"] == "g"
 
 
 def test_nr_graphql_error(requests_mock):
-    requests_mock.post("https://api.newrelic.com/graphql", json={"errors": [{"message": "boom"}]}, status_code=200)
+    requests_mock.post(
+        "https://api.newrelic.com/graphql", json={"errors": [{"message": "boom"}]}, status_code=200
+    )
     with pytest.raises(SystemExit):
         nrsak.nrAccount()
 

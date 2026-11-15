@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """New Relic Swiss Army Knife (nrsak)."""
+
 import argparse
 import inspect
 import json
@@ -225,7 +226,11 @@ def nrUser():
 
 def nrNrql(query=None, account_id=None):
     """Run a NRQL query through NerdGraph."""
-    query = query if query is not None else (_env("NRQL") or "SELECT count(*) FROM Transaction SINCE 1 hour ago")
+    query = (
+        query
+        if query is not None
+        else (_env("NRQL") or "SELECT count(*) FROM Transaction SINCE 1 hour ago")
+    )
     account_id = account_id if account_id is not None else _env("NR_ACCOUNT_ID")
     _require(account_id, "NR_ACCOUNT_ID is required")
     gql = """
