@@ -1,8 +1,5 @@
-import os
-import sys
 
 import pytest
-import requests_mock
 
 import nrsak
 
@@ -83,7 +80,6 @@ def test_nr_create_deployment(requests_mock, monkeypatch):
     requests_mock.post("https://api.newrelic.com/v2/applications/5/deployments.json", json={"deployment": {"id": 1}})
     result = nrsak.nrCreateDeployment(revision="v1.2.3", changelog="changes")
     assert result == {"deployment": {"id": 1}}
-    import json
     assert requests_mock.last_request.json()["deployment"]["revision"] == "v1.2.3"
 
 

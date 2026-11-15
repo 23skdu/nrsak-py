@@ -21,12 +21,12 @@ class TestDockerfile:
             text=True,
         )
         yield tag
-        subprocess.run(["docker", "rmi", "-f", tag], capture_output=True)
+        subprocess.run(["docker", "rmi", "-f", tag], check=False, capture_output=True)
 
     def test_build_and_function_list(self, image):
         out = subprocess.run(
             ["docker", "run", "--rm", image],
-            capture_output=True,
+            check=False, capture_output=True,
             text=True,
         )
         assert out.returncode == 0, out.stderr
@@ -35,7 +35,7 @@ class TestDockerfile:
     def test_run_nr_summary_without_key_fails(self, image):
         out = subprocess.run(
             ["docker", "run", "--rm", image, "nrSummary"],
-            capture_output=True,
+            check=False, capture_output=True,
             text=True,
         )
         assert out.returncode != 0
@@ -45,7 +45,7 @@ class TestDockerfile:
     def test_runs_as_non_root(self, image):
         out = subprocess.run(
             ["docker", "run", "--rm", "--entrypoint", "id", image],
-            capture_output=True,
+            check=False, capture_output=True,
             text=True,
         )
         assert out.returncode == 0

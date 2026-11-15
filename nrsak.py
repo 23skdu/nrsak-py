@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """New Relic Swiss Army Knife (nrsak)."""
+import argparse
 import inspect
 import json
 import os
 import sys
-import argparse
 
 import requests
 
