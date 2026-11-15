@@ -1,0 +1,17 @@
+[project]
+name = "nrsak-py"
+version = "0.2.0"
+description = "New Relic Swiss Army Knife - a small CLI around the New Relic APIs."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.32.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
