@@ -2,7 +2,7 @@
 pytest>=9.2.0
 pytest-cov>=7.1.0
 requests-mock>=1.12.1
-ruff>=0.17.5
+ruff>=0.17.6
 mypy>=2.4.1
 bandit>=1.9.4
 types-requests>=2.33.0.20261030
