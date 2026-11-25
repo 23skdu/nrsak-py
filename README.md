@@ -34,3 +34,7 @@ pytest
 ```
 
 See [docs/cli.md](docs/cli.md) for the full CLI reference.
+
+## License
+
+This project is released into the public domain under the [Unlicense](https://unlicense.org). See [LICENSE](LICENSE) for details.
